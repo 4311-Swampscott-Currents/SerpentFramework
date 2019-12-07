@@ -12,14 +12,14 @@ public class NetworkBinding {
 
     public static void Initialize() {
         currentNetworkTableInstance = NetworkTableInstance.getDefault();
-        currentNetworkTableInstance.addEntryListener("waypoints", onWaypointsUpdated, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        currentNetworkTableInstance.addEntryListener("waypoints", notification -> { onWaypointsUpdated(); }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
     }
 
     public static Waypoint[] getAvailableWaypoints() {
         return availableWaypoints;
     }
 
-    private static void onWaypointsUpdated(EntryNotification notification) {
-
+    private static void onWaypointsUpdated() {
+        
     }
 }
