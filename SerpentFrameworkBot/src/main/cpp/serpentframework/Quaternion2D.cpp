@@ -13,7 +13,6 @@ serpentframework::Quaternion2D::Quaternion2D(double xpos, double ypos) {
     y = ypos;
 }
 
-//Takes an axis representing an angle and converts it to a quaternion.
 serpentframework::Quaternion2D serpentframework::Quaternion2D::fromAxis(double x, double y) {
     double length = sqrt(x*x + y*y);
     x /= length;
@@ -21,13 +20,11 @@ serpentframework::Quaternion2D serpentframework::Quaternion2D::fromAxis(double x
     return serpentframework::Quaternion2D::fromEuler((-2 * signbit(x) + 1) * asin(y) * (180 / M_PI));
 }
 
-//Takes an angle in degrees to convert to a unit quaternion.
 serpentframework::Quaternion2D serpentframework::Quaternion2D::fromEuler(double angle) {
     angle = angle * (M_PI / 360);
     return Quaternion2D(cos(angle), sin(angle));
 }
 
-//Spherically interpolates between two unit quaternions.
 serpentframework::Quaternion2D serpentframework::Quaternion2D::slerp(Quaternion2D a, Quaternion2D b, double t) {
     double cosDot = acos(dot(a, b));
     double aCoeff = sin((1 - t) * cosDot) / sin(cosDot);
@@ -35,17 +32,14 @@ serpentframework::Quaternion2D serpentframework::Quaternion2D::slerp(Quaternion2
     return Quaternion2D((aCoeff * a.x) + (bCoeff * b.x), (aCoeff * a.y) + (bCoeff * b.y));
 }
 
-//Calculates the dot product, or the cosine of the angle between two unit quaternions.
 double serpentframework::Quaternion2D::dot(Quaternion2D a, Quaternion2D b) {
     return (a.x * b.x) + (a.y * b.y);
 }
 
-//Converts a quaternion to an angle in degrees.
 double serpentframework::Quaternion2D::toEuler() {
     return (-2 * signbit(x) + 1) * asin(y) * (360 / M_PI);
 }
 
-//Converts a quaternion to unit length.
 void serpentframework::Quaternion2D::normalize() {
     double distance = sqrt(pow(x, 2) + pow(y, 2));
     x /= distance;

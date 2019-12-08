@@ -11,9 +11,9 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="viewingPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="948.59716796875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="org.swampscottcurrents.serpentui.PathControlWidget">
-  <Pane layoutX="50.0" layoutY="44.0" minHeight="400.212158203125" minWidth="849.59716796875" prefHeight="400.212158203125" prefWidth="849.59716796875">
+  <Pane fx:id="fieldPane" layoutX="77.0" layoutY="44.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="794.0">
     <children>
-      <ImageView fitHeight="400.2121887207031" fitWidth="849.5972195291636" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="400.2121887207031" fitWidth="849.5972195291636" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" x="-28.0">
         <image>
           <Image url="@Field.jpeg" />
         </image>

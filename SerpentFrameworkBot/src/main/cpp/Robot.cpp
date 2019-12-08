@@ -24,6 +24,10 @@ void Robot::disabledUpdate() {
   if(weirdTime < Robot::getRobotTime()) {
     std::vector<serpentframework::Waypoint> points = std::vector<serpentframework::Waypoint>();
     points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::GRAB_PANEL, 20, 5));
+    points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::NAVIGATION, 5, 50));
+    points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::NAVIGATION, 2, 21.3));
+    points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::NAVIGATION, 0, 0));
+    points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::PLACE_PANEL, 12, 26));
     serpentframework::NetworkBinding::SetWaypoints(points);
     weirdTime = Robot::getRobotTime() + 1;
   }

@@ -2,7 +2,6 @@
 #include <iostream>
 #include "serpentframework/NetworkBinding.h"
 
-//Returns whether the machine this is running on stores bytes in big endian.
 bool serpentframework::NetworkBinding::IsBigEndian() {
     unsigned int i = 1;  
     char *c = (char*)&i;  
@@ -14,7 +13,6 @@ bool serpentframework::NetworkBinding::IsBigEndian() {
     }
 }
 
-//Updates the Waypoint information in NetworkTables such that SerpentUI has access to it.
 void serpentframework::NetworkBinding::SetWaypoints(std::vector<Waypoint> points) {
     char* charList = new char[points.size() * 18];
     for (int x = 0; x < points.size(); x++)
@@ -26,7 +24,7 @@ void serpentframework::NetworkBinding::SetWaypoints(std::vector<Waypoint> points
             for(int y = 0; y < 8; y++) {
                 *(charList + (x * 18) + y + 2) = *(positionVal + y);
             }
-            positionVal = (char*)&points[x].yPosition;
+            positionVal = (char*)&points[x].zPosition;
             for(int y = 0; y < 8; y++) {
                 *(charList + (x * 18) + y + 10) = *(positionVal + y);
             }
@@ -36,7 +34,7 @@ void serpentframework::NetworkBinding::SetWaypoints(std::vector<Waypoint> points
             for(int y = 0; y < 8; y++) {
                 *(charList + (x * 18) - y + 9) = *(positionVal + y);
             }
-            positionVal = (char*)&points[x].yPosition;
+            positionVal = (char*)&points[x].zPosition;
             for(int y = 0; y < 8; y++) {
                 *(charList + (x * 18) - y + 17) = *(positionVal + y);
             }
