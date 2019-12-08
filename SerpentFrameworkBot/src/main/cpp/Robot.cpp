@@ -8,12 +8,25 @@
 #include "Robot.h"
 
 #include <iostream>
-
+#include <serpentframework/NetworkBinding.h>
 #include <frc/Timer.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <networktables/NetworkTableInstance.h>
 
 void Robot::robotStart() {
-  std::cout << "yeet";
+  std::vector<serpentframework::Waypoint> points = std::vector<serpentframework::Waypoint>();
+  points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::NAVIGATION, 10, 10));
+  serpentframework::NetworkBinding::SetWaypoints(points);
+  weirdTime = Robot::getRobotTime() + 2;
+}
+
+void Robot::disabledUpdate() {
+  if(weirdTime < Robot::getRobotTime()) {
+    std::vector<serpentframework::Waypoint> points = std::vector<serpentframework::Waypoint>();
+    points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::GRAB_PANEL, 20, 5));
+    serpentframework::NetworkBinding::SetWaypoints(points);
+    weirdTime = Robot::getRobotTime() + 1;
+  }
 }
 
 #ifndef RUNNING_FRC_TESTS

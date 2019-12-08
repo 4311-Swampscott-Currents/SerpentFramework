@@ -1,7 +1,5 @@
-#include <math.h>
-
 #include "serpentframework/Quaternion2D.h"
-#define M_PI 3.14159265358979323846
+# define M_PI 3.14159265358979323846
 
 serpentframework::Quaternion2D::Quaternion2D() {
     x = 0;
@@ -11,14 +9,6 @@ serpentframework::Quaternion2D::Quaternion2D() {
 serpentframework::Quaternion2D::Quaternion2D(double xpos, double ypos) {
     x = xpos;
     y = ypos;
-}
-
-//Takes an axis representing an angle and converts it to a quaternion.
-serpentframework::Quaternion2D serpentframework::Quaternion2D::fromAxis(double x, double y) {
-    double length = sqrt(x*x + y*y);
-    x /= length;
-    y /= length;
-    return serpentframework::Quaternion2D::fromEuler((-2 * signbit(x) + 1) * asin(y) * (180 / M_PI));
 }
 
 //Takes an angle in degrees to convert to a unit quaternion.
@@ -42,7 +32,7 @@ double serpentframework::Quaternion2D::dot(Quaternion2D a, Quaternion2D b) {
 
 //Converts a quaternion to an angle in degrees.
 double serpentframework::Quaternion2D::toEuler() {
-    return (-2 * signbit(x) + 1) * asin(y) * (360 / M_PI);
+    return atan(y / x) * (180 / M_PI);
 }
 
 //Converts a quaternion to unit length.

@@ -4,7 +4,6 @@ void serpentframework::FastRobot::RobotInit() {
     robotTimer = new frc::Timer();
     matchTimer = new frc::Timer();
     robotTimer->Start();
-    robotStart();
 }
 
 void serpentframework::FastRobot::Autonomous() {

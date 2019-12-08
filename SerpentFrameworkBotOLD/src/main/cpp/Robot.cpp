@@ -5,14 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "Robot.h"
 
-#include <string>
-#include <serpentframework/FastRobot.h>
+#include <iostream>
 
-class Robot : public serpentframework::FastRobot {
-  public:
-    void robotStart() override;
-    void disabledUpdate() override;
-    double Robot::weirdTime;
-};
+#include <frc/Timer.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
+void Robot::robotStart() {
+  std::cout << "yeet";
+}
+
+#ifndef RUNNING_FRC_TESTS
+int main() { return frc::StartRobot<Robot>(); }
+#endif

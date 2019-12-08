@@ -11,36 +11,27 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="viewingPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="948.59716796875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="org.swampscottcurrents.serpentui.PathControlWidget">
-  <ImageView fitHeight="400.2121887207031" fitWidth="849.5972195291636" layoutX="50.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
-    <image>
-      <Image url="@Field.jpeg" />
-    </image>
-  </ImageView>
-  <Button fx:id="placeRocketBallBTRMB" contentDisplay="CENTER" layoutX="348.0" layoutY="77.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onMovementButtonClicked" prefHeight="20.0" prefWidth="20.0" text="P" textAlignment="CENTER" textFill="YELLOW" textOverrun="CLIP">
-    <effect>
-      <ColorAdjust hue="-1.0" saturation="1.0" />
-    </effect>
-    <font>
-      <Font size="8.0" fx:id="x1" />
-    </font>
-  </Button>
-  <VBox fx:id="robotIcon" layoutX="618.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0">
+  <Pane layoutX="50.0" layoutY="44.0" minHeight="400.212158203125" minWidth="849.59716796875" prefHeight="400.212158203125" prefWidth="849.59716796875">
     <children>
-      <Label blendMode="SRC_OVER" ellipsisString="" text="⚙" textAlignment="CENTER" textFill="WHITE" translateX="3.0" translateY="-4.0">
-        <font>
-          <Font name="System Bold" size="30.0" />
-        </font>
-      </Label>
-      <ImageView blendMode="SRC_OVER" fitHeight="40.0" fitWidth="60.0" opacity="1.0" pickOnBounds="true" preserveRatio="false" smooth="false" translateX="-15.0" translateY="-45.0" visible="true" x="0.0">
+      <ImageView fitHeight="400.2121887207031" fitWidth="849.5972195291636" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@RobotSquare.png" />
+          <Image url="@Field.jpeg" />
         </image>
       </ImageView>
+      <VBox fx:id="robotIcon" layoutX="618.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0">
+        <children>
+          <Label blendMode="SRC_OVER" ellipsisString="" text="⚙" textAlignment="CENTER" textFill="WHITE" translateX="3.0" translateY="-4.0">
+            <font>
+              <Font name="System Bold" size="30.0" />
+            </font>
+          </Label>
+          <ImageView blendMode="SRC_OVER" fitHeight="40.0" fitWidth="60.0" opacity="1.0" pickOnBounds="true" preserveRatio="false" smooth="false" translateX="-15.0" translateY="-45.0" visible="true" x="0.0">
+            <image>
+              <Image url="@RobotSquare.png" />
+            </image>
+          </ImageView>
+        </children>
+      </VBox>
     </children>
-  </VBox>
-  <Button fx:id="placeRocketBallRTRMB" contentDisplay="CENTER" font="$x1" layoutX="582.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onMovementButtonClicked" prefHeight="20.0" prefWidth="20.0" text="P" textAlignment="CENTER" textFill="YELLOW" textOverrun="CLIP">
-    <effect>
-      <ColorAdjust hue="-1.0" saturation="1.0" />
-    </effect>
-  </Button>
+  </Pane>
 </AnchorPane>

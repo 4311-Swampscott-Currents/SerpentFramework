@@ -11,6 +11,12 @@ import edu.wpi.first.shuffleboard.api.widget.WidgetType;
 
 @Description(group = "SerpentFramework", name = "SerpentUI", summary = "Team 4311 robot control plugin, designed to allow selection of movement targets on the field.", version = "0.0.2")
 public class App extends Plugin {
+
+	public App() {
+		super();
+		NetworkBinding.Initialize();
+	}
+
 	@Override
 	@SuppressWarnings("all")
 	public List<ComponentType> getComponents() {
