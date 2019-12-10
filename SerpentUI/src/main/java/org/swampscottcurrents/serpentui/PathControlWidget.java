@@ -9,10 +9,14 @@ import edu.wpi.first.shuffleboard.api.widget.ParametrizedController;
 import edu.wpi.first.shuffleboard.api.widget.SimpleAnnotatedWidget;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -31,7 +35,11 @@ public class PathControlWidget extends SimpleAnnotatedWidget implements INetwork
     @FXML
     private Pane fieldPane;
     @FXML
+    private ImageView fieldImage;
+    @FXML
     private VBox robotIcon;
+    @FXML
+    private TextArea genId;
 
     @Override
     public Pane getView() {
@@ -42,6 +50,9 @@ public class PathControlWidget extends SimpleAnnotatedWidget implements INetwork
     public void initialize() {
         robotIcon.setLayoutX(146);
         robotIcon.setLayoutY(229);
+        fieldImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Platform.runLater(() -> {
+            genId.setText(genId.getText() + "points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::NAVIGATION, " + String.valueOf((event.getY() / fieldPane.getPrefHeight()) * 26.58333333333) + ", " + String.valueOf((event.getX() / fieldPane.getPrefWidth()) * 54.08333333333) + "));\n");
+        }));
         reload();
     }
 
