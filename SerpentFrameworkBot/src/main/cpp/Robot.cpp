@@ -14,6 +14,7 @@
 #include <networktables/NetworkTableInstance.h>
 
 void Robot::robotStart() {
+  std::cout << "pie";
   std::vector<serpentframework::Waypoint> points = std::vector<serpentframework::Waypoint>();
   points.push_back(serpentframework::Waypoint(0, serpentframework::WaypointType::NAVIGATION, 10, 10));
   serpentframework::NetworkBinding::SetWaypoints(points);

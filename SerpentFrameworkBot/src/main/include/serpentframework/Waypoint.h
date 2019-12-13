@@ -5,7 +5,6 @@
 namespace serpentframework {
     class Waypoint {
         public:
-            Waypoint() {}
             //Creates a new Waypoint with the specified ID, waypoint action, and position.
             Waypoint(char i, WaypointType action, double x, double y);
 
@@ -13,7 +12,7 @@ namespace serpentframework {
             double xPosition;
             double zPosition;
             WaypointType actionType;
-            std::vector<Waypoint> connectedPoints[];
+            std::vector<Waypoint> connectedPoints;
 
             //Calculates the distance between two Waypoints.
             static double distance(Waypoint, Waypoint);

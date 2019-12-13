@@ -14,5 +14,5 @@ class Robot : public serpentframework::FastRobot {
   public:
     void robotStart() override;
     void disabledUpdate() override;
-    double Robot::weirdTime;
+    double weirdTime;
 };
