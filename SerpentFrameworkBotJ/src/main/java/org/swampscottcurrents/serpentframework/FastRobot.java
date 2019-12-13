@@ -64,7 +64,7 @@ public class FastRobot extends SampleRobot {
         updateTimeDelta();
         while(isOperatorControl() && !isDisabled()) {
             robotUpdate();
-            autonomousUpdate();
+            teleopUpdate();
             updateTimeDelta();
         }
         autonomousEnd();
