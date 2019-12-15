@@ -48,7 +48,7 @@ public class NetworkBinding {
         for(int x = 0; x < loadedWaypoints.length; x++) {
             Waypoint point = new Waypoint();
             point.id = waypointRepresentation[x * 18 + 0];
-            point.actionType = waypointRepresentation[x * 18 + 1];
+            point.actionType = WaypointType.fromValue(waypointRepresentation[x * 18 + 1]);
             point.xPosition = ByteBuffer.wrap(waypointRepresentation, x * 18 + 2, 8).getDouble();
             point.zPosition = ByteBuffer.wrap(waypointRepresentation, x * 18 + 10, 8).getDouble();
             loadedWaypoints[x] = point;

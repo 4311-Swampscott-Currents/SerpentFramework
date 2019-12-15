@@ -2,19 +2,20 @@ package org.swampscottcurrents.serpentframework;
 
 public class Waypoint {
     
-    private static int pointCount;
+    private static byte pointCount;
 
-    public final int id;
+    public final byte id;
     public double xPosition;
     public double yPosition;
     public WaypointType actionType;
 
     public Waypoint() {
         id = pointCount;
+        actionType = WaypointType.NAVIGATION;
         pointCount++;
     }
 
-    public Waypoint(double x, double y, WaypointType action) {
+    public Waypoint(WaypointType action, double x, double y) {
         id = pointCount;
         xPosition = x;
         yPosition = y;
