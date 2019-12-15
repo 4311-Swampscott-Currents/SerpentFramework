@@ -55,7 +55,7 @@ serpentframework::Quaternion2D serpentframework::operator-(serpentframework::Qua
 }
 
 serpentframework::Quaternion2D serpentframework::operator*(serpentframework::Quaternion2D a, serpentframework::Quaternion2D b) {
-    return serpentframework::Quaternion2D((a.x * b.x) + (a.y * b.y), (a.y * b.x) - (a.x * b.y));
+    return serpentframework::Quaternion2D((a.x * b.x) - (a.y * b.y), (a.y * b.x) + (a.x * b.y));
 }
 
 serpentframework::Quaternion2D serpentframework::operator!(serpentframework::Quaternion2D a) {
