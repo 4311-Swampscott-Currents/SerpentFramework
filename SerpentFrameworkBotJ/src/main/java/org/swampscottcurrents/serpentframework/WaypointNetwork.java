@@ -4,7 +4,32 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class WaypointNetwork {
+
     public WaypointNode[] nodes;
+    
+    private static WaypointNetwork instance;
+
+    /** Sets the in-use WaypointNetwork. */
+    public static void setInstance(WaypointNetwork network) {
+        instance = network;
+        Waypoint[] pts = new Waypoint[network.nodes.length];
+        for(int x = 0; x < pts.length; x++) {
+            pts[x] = network.nodes[x].point;
+        }
+        NetworkBinding.setWaypoints(pts);
+    }
+
+    /** Sets the in-use WaypointNetwork. */
+    public static void setInstance(WaypointNode[] nodes) {
+        WaypointNetwork network = new WaypointNetwork();
+        network.nodes = nodes;
+        setInstance(network);
+    }
+
+    /** Gets the currently in-use WaypointNetwork. */
+    public static WaypointNetwork getInstance() {
+        return instance;
+    }
 
     /** Constructs a series of Waypoints representing the path with least nodes from the start Waypoint to the end Waypoint. */
     public WaypointNode[] getPathToPoint(Waypoint start, Waypoint end) {
