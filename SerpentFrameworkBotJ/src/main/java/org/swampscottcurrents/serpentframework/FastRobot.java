@@ -1,13 +1,16 @@
 package org.swampscottcurrents.serpentframework;
 
+import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class FastRobot extends SampleRobot {
+public class FastRobot extends RobotBase {
 
     private Timer matchTimer;
     private Timer robotTimer;
     private double timeDelta;
     private double lastUpdateTime;
+    private boolean competitionInProgress = true;
 
     /** Called once when the robot initally turns on. */
     public void robotStart() {}
@@ -38,20 +41,41 @@ public class FastRobot extends SampleRobot {
     /** Called once when the robot is enabled. */
     public void disabledEnd() {}
 
-    public final void robotInit() {
+    public final void startCompetition() {
         robotTimer = new Timer();
         matchTimer = new Timer();
         robotTimer.start();
+        HAL.observeUserProgramStarting();
         robotStart();
+        while (!Thread.currentThread().isInterrupted() && competitionInProgress) {
+            if(isDisabled()) {
+                disabled();
+            }
+            else if (isAutonomous()) {
+                autonomous();
+            }
+            else if(isOperatorControl()) {
+                operatorControl();
+            }
+            else if(isTest()) {
+                test();
+            }
+        }
+    }
+
+    public final void endCompetition() {
+        competitionInProgress = false;
     }
 
     public final void autonomous() {
+        HAL.observeUserProgramAutonomous();
         matchTimer.reset();
         matchTimer.start();
         autonomousStart();
         updateTimeDelta();
-        while(isAutonomous() && !isDisabled()) {
+        while(isAutonomous() && !isDisabled() && competitionInProgress) {
             robotUpdate();
+            CommandScheduler.getInstance().run();
             autonomousUpdate();
             updateTimeDelta();
         }
@@ -60,10 +84,12 @@ public class FastRobot extends SampleRobot {
     }
 
     public final void operatorControl() {
+        HAL.observeUserProgramTeleop();
         teleopStart();
         updateTimeDelta();
-        while(isOperatorControl() && !isDisabled()) {
+        while(isOperatorControl() && !isDisabled() && competitionInProgress) {
             robotUpdate();
+            CommandScheduler.getInstance().run();
             teleopUpdate();
             updateTimeDelta();
         }
@@ -72,10 +98,12 @@ public class FastRobot extends SampleRobot {
     }
 
     public final void test() {
+        HAL.observeUserProgramTest();
         testStart();
         updateTimeDelta();
-        while(isTest() && !isDisabled()) {
+        while(isTest() && !isDisabled() && competitionInProgress) {
             robotUpdate();
+            CommandScheduler.getInstance().run();
             testUpdate();
             updateTimeDelta();
         }
@@ -84,10 +112,12 @@ public class FastRobot extends SampleRobot {
     }
 
     public final void disabled() {
+        HAL.observeUserProgramDisabled();
         disabledStart();
         updateTimeDelta();
-        while(isDisabled()) {
+        while(isDisabled() && competitionInProgress) {
             robotUpdate();
+            CommandScheduler.getInstance().run();
             disabledUpdate();
             updateTimeDelta();
         }

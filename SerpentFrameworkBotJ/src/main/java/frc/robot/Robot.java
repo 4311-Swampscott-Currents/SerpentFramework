@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,48 +7,27 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
+import org.swampscottcurrents.serpentframework.FastRobot;
 
-import org.swampscottcurrents.serpentframework.*;
-import org.swampscottcurrents.serpentframework.command.*;
-
-import frc.robot.command.*;
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class Robot extends FastRobot {
-
-    public static Robot instance;
-
     public void robotStart() {
-        instance = this;
-        CommandGroup group = new CommandGroup(new Command[] { new TestCommand1() });
-        group.queueCommand(new TestCommand1());
-        group.queueCommand(new TestCommand2());
-        CommandManager.executeCommand(group);
+        System.out.println("hoi");
     }
 
-    public void robotUpdate() {
-        CommandManager.update();
+    public void autonomousStart() {
+        System.out.println("auto");
     }
 
-    /*public double[] theAverageTen = new double[10];
-    public double nextSpeakTime;
-    public int xPos;
+    public void teleopStart() {
+        System.out.println("tell");
+    }
 
-    public void robotUpdate() {
-        //loop benchmarking test
-        if(xPos == 10) {
-            theAverageTen = new double[10];
-            xPos = 0;
-        }
-        theAverageTen[xPos] = getTimeDelta();
-        xPos++;
-        if(nextSpeakTime < getRobotTime() && theAverageTen[9] != 0) {
-            double avg = 0;
-            for(double d : theAverageTen) {
-                avg += d / 10;
-            }
-            //System.out.println("The average is " + (avg * 1000) + " ms");
-            nextSpeakTime = getRobotTime() + 2;
-        }
-    }*/
+    public void disabledStart() {
+        System.out.println("im disabled lol");
+    }
 }
