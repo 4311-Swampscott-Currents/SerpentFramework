@@ -1,9 +1,12 @@
 package org.swampscottcurrents.serpentframework;
 
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+/** A robot class which calls periodic update functions as fast as possible. */
 public class FastRobot extends RobotBase {
 
     private Timer matchTimer;
@@ -41,12 +44,14 @@ public class FastRobot extends RobotBase {
     /** Called once when the robot is enabled. */
     public void disabledEnd() {}
 
+    @Override
     public final void startCompetition() {
         robotTimer = new Timer();
         matchTimer = new Timer();
         robotTimer.start();
         HAL.observeUserProgramStarting();
         robotStart();
+        updateAllianceInformation();
         while (!Thread.currentThread().isInterrupted() && competitionInProgress) {
             if(isDisabled()) {
                 disabled();
@@ -63,6 +68,7 @@ public class FastRobot extends RobotBase {
         }
     }
 
+    @Override
     public final void endCompetition() {
         competitionInProgress = false;
     }
@@ -112,10 +118,12 @@ public class FastRobot extends RobotBase {
     }
 
     public final void disabled() {
+        updateAllianceInformation();
         HAL.observeUserProgramDisabled();
         disabledStart();
         updateTimeDelta();
         while(isDisabled() && competitionInProgress) {
+            updateAllianceInformation();
             robotUpdate();
             CommandScheduler.getInstance().run();
             disabledUpdate();
@@ -143,5 +151,18 @@ public class FastRobot extends RobotBase {
     private void updateTimeDelta() {
         timeDelta = robotTimer.get() - lastUpdateTime;
         lastUpdateTime = robotTimer.get();
+    }
+    
+    private void updateAllianceInformation() {
+        Alliance alliance = DriverStation.getInstance().getAlliance();
+        if(alliance == Alliance.Red) {
+            NetworkTableInstance.getDefault().getEntry("sf.alliance").setString("RED");
+        }
+        else if(alliance == Alliance.Blue) {
+            NetworkTableInstance.getDefault().getEntry("sf.alliance").setString("BLUE");
+        }
+        else {
+            NetworkTableInstance.getDefault().getEntry("sf.alliance").setString("UNKNOWN");
+        }
     }
 }

@@ -25,7 +25,7 @@ public class NetworkBinding {
             if(!notification.connected) {
                 currentNetworkTableInstance.deleteAllEntries();
             }
-            onWaypointsUpdated();
+            sendNetworkUpdate();
         }, true);
         currentNetworkTableInstance.addEntryListener("waypoints", notification -> onWaypointsUpdated(), EntryListenerFlags.kImmediate | EntryListenerFlags.kDelete | EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
     }
@@ -37,7 +37,7 @@ public class NetworkBinding {
     public static void sendNetworkUpdate() {
         for(Widget widget : Components.getDefault().getActiveWidgets()) {
             if(widget instanceof INetworkUpdatable) {
-                ((INetworkUpdatable)widget).OnNetworkUpdate();
+                ((INetworkUpdatable)widget).onNetworkUpdate();
             }
         }
     }
