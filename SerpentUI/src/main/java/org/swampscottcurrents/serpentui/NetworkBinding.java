@@ -27,7 +27,7 @@ public class NetworkBinding {
             }
             sendNetworkUpdate();
         }, true);
-        currentNetworkTableInstance.addEntryListener("waypoints", notification -> onWaypointsUpdated(), EntryListenerFlags.kImmediate | EntryListenerFlags.kDelete | EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        //currentNetworkTableInstance.addEntryListener("waypoints", notification -> onWaypointsUpdated(), EntryListenerFlags.kImmediate | EntryListenerFlags.kDelete | EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
     }
 
     public static Waypoint[] getAvailableWaypoints() {

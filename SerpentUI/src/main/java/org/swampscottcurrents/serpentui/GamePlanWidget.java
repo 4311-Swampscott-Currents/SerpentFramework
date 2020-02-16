@@ -45,7 +45,7 @@ import javafx.util.Duration;
 
 @Description(dataTypes = { NoneType.class }, name = "GamePlan")
 @ParametrizedController(value = "GamePlanWidget.fxml")
-public class GamePlanWidget extends SimpleAnnotatedWidget {
+public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpdatable {
 
     public static final double fieldWidth = 54.083; //ft
     public static final double fieldHeight = 26.583; //ft
@@ -154,6 +154,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
             if(dest != null) {
                 try {
                     loadGamePlanStrategy(Files.readAllLines(Paths.get(dest.getPath())).get(0));
+                    onNetworkUpdate();
                 } catch(Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setHeaderText("An unknown error occured while attempting to load the GamePlan strategy.");
@@ -195,6 +196,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
                     ((WaitRobotAction)selectedAction).timeToWait = ((NumericTextField)timer.getDialogPane().expandableContentProperty().getValue()).getNumber() / 1000D;
                     reloadRobotActionVBox();
                 }
+                onNetworkUpdate();
             }
         });
         moveActionUpButton.setOnMouseClicked(event -> {
@@ -210,6 +212,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
                     else {
                         selectedAction.setPosition(robotActions.get(index - 2).xPosition, robotActions.get(index - 2).yPosition);
                     }
+                    onNetworkUpdate();
                 }
             }
         });
@@ -221,6 +224,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
                     robotActions.add(index + 1, selectedAction);
                     reloadRobotActionVBox();
                     selectedAction.setPosition(robotActions.get(index).xPosition, robotActions.get(index).yPosition);
+                    onNetworkUpdate();
                 }
             }
         });
@@ -250,6 +254,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
                     fieldPane.getChildren().remove(selectedAction.associatedNode);
                     selectItemQuiet(null);
                 }
+                onNetworkUpdate();
                 reloadRobotActionVBox();
             }
         });
@@ -288,6 +293,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
                         act.setPosition(event.getX(), event.getY());
                     }
                 }
+                onNetworkUpdate();
                 robotIcon.toFront();
             }
         });
@@ -304,6 +310,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
             fieldPane.getChildren().add(act.associatedNode);
             robotActions.add(act);
             reloadRobotActionVBox();
+            onNetworkUpdate();
             robotIcon.toFront();
             event.consume();
         });
@@ -316,6 +323,8 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
+
+    
 
     public void loadGamePlanStrategy(String input) {
         for(RobotAction act : robotActions) {
@@ -495,6 +504,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
             fieldPane.getChildren().add(act.associatedNode);
             reloadRobotActionVBox();
         }
+        onNetworkUpdate();
     }
 
     public void reloadRobotActionVBox() {
@@ -614,5 +624,12 @@ public class GamePlanWidget extends SimpleAnnotatedWidget {
 
     private static double clamp(double val, double min, double max) {
         return Math.max(min, Math.min(max, val));
+    }
+
+    @Override
+    public void onNetworkUpdate() {
+        if(NetworkTableInstance.getDefault().isConnected()) {
+            NetworkTableInstance.getDefault().getEntry("gamePlanStrategy").setString(getGamePlanStrategyOutput());
+        }
     }
 }
