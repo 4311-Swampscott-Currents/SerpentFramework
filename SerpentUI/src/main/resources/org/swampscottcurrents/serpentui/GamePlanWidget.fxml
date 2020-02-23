@@ -84,4 +84,18 @@
       <Button id="moveActionUpArrow" fx:id="loadConfigurationButton" layoutX="385.0" layoutY="31.0" maxHeight="21.0" maxWidth="51.0" minHeight="21.0" minWidth="32.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="51.0" style="-fx-font: 12px System" text="Load" />
     </children>
   </Pane>
+  <AnchorPane fx:id="setPositionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <children>
+      <Pane id="fieldPane" layoutX="0.0" layoutY="54.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="640.0">
+        <children>
+          <ImageView id="fieldImage" fx:id="robotPositionImageView" fitHeight="269.2574884964932" fitWidth="512.0" layoutX="0.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" x="0.0">
+            <image>
+              <Image url="file:/D:/Projects/FRC/SerpentFramework/SerpentUI/src/main/resources/org/swampscottcurrents/serpentui/Field2020Cropped.png" />
+            </image>
+          </ImageView>
+        </children>
+      </Pane>
+      <Label layoutX="57.0" layoutY="349.0" prefHeight="200.0" prefWidth="479.0" text="Click on where the robot approximately is and the launcher speed will be set accordingly." wrapText="true" />
+    </children>
+  </AnchorPane>
 </AnchorPane>

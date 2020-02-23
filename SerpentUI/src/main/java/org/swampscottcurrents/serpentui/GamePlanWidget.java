@@ -99,6 +99,10 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
     private Button saveConfigurationButton;
     @FXML
     private Button loadConfigurationButton;
+    @FXML
+    private AnchorPane setPositionPane;
+    @FXML
+    private ImageView robotPositionImageView;
 
     public static ImageView driveStraightArrowTemplateImage;
     public static AnchorPane driveStraightArrowTemplate;
@@ -130,6 +134,11 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
                 ((Stage)stage).getIcons().add(new Image(arrowTemplateImage.getImage().getUrl().replace("AquaTriangle.png", "Logo.png")));
             }
         }
+        robotPositionImageView.setOnMouseClicked(event -> {
+           NetworkTableInstance.getDefault().getEntry("guiRobotPositionX").setDouble(event.getX() / pxFieldWidth * fieldWidth); 
+           NetworkTableInstance.getDefault().getEntry("guiRobotPositionY").setDouble(event.getY() / pxFieldHeight * fieldHeight); 
+           event.consume();
+        });
         saveConfigurationButton.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save strategy");
@@ -268,10 +277,12 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
             if(colorChoiceBox.getSelectionModel().getSelectedItem() == "RED") {
                 robotIcon.setStyle("-fx-background-color: #ff0000");
                 fieldImage.setRotate(0);
+                robotPositionImageView.setRotate(0);
             }
             else {
                 robotIcon.setStyle("-fx-background-color: #0000ff");
                 fieldImage.setRotate(180);
+                robotPositionImageView.setRotate(180);
             }
         });
         colorChoiceBox.setValue("RED");
@@ -613,11 +624,22 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
                 colorChoiceBox.setValue("BLUE");
                 colorLabel.setText("BLUE");
             }
+
+            if(instance.getEntry("isManualMode").exists()) {
+                setPositionPane.setVisible(true);
+                setPositionPane.setDisable(false);
+            }
+            else {
+                setPositionPane.setVisible(false);
+                setPositionPane.setDisable(true);
+            }
         } else {
             colorChoiceBox.setVisible(true);
             colorChoiceBox.setDisable(false);
             colorLabel.setVisible(false);
             colorLabel.setDisable(true);
+            setPositionPane.setVisible(false);
+            setPositionPane.setDisable(true);
         }
         robotIcon.setRotate(180 + instance.getEntry("robotOrientationY").getDouble(0));
     }
