@@ -129,6 +129,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
 
     @FXML
     public void initialize() {
+        robotPositionImageView.setImage(fieldImage.getImage());
         for(Window stage : Stage.getWindows()) {
             if(Stage.class.isInstance(stage)) {
                 ((Stage)stage).getIcons().add(new Image(arrowTemplateImage.getImage().getUrl().replace("AquaTriangle.png", "Logo.png")));
@@ -641,7 +642,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
             setPositionPane.setVisible(false);
             setPositionPane.setDisable(true);
         }
-        robotIcon.setRotate(180 + instance.getEntry("robotOrientationY").getDouble(0));
+        robotIcon.setRotate(instance.getEntry("robotOrientationY").getDouble(0));
     }
 
     private static double clamp(double val, double min, double max) {
