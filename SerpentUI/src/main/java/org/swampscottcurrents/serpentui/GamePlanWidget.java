@@ -113,6 +113,8 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
     private RobotAction selectedAction = null;
     private ToggleGroup robotActionToggleGroup = new ToggleGroup();
 
+    private static GamePlanWidget lastActor = null;
+
     @Override
     public Pane getView() {
         return viewingPane;
@@ -129,15 +131,22 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
 
     @FXML
     public void initialize() {
+        robotPositionImageView.setImage(fieldImage.getImage());
         for(Window stage : Stage.getWindows()) {
             if(Stage.class.isInstance(stage)) {
                 ((Stage)stage).getIcons().add(new Image(arrowTemplateImage.getImage().getUrl().replace("AquaTriangle.png", "Logo.png")));
             }
         }
         robotPositionImageView.setOnMouseClicked(event -> {
-           NetworkTableInstance.getDefault().getEntry("guiRobotPositionX").setDouble(event.getX() / pxFieldWidth * fieldWidth); 
-           NetworkTableInstance.getDefault().getEntry("guiRobotPositionY").setDouble(event.getY() / pxFieldHeight * fieldHeight); 
-           event.consume();
+            double ex = event.getX() / pxFieldWidth * fieldWidth;
+            double ey = event.getY() / pxFieldHeight * fieldHeight;
+            if(colorChoiceBox.getSelectionModel().getSelectedItem() == "BLUE") {
+                ex = fieldWidth - ex;
+                ey = fieldHeight - ey;
+            }
+            NetworkTableInstance.getDefault().getEntry("guiRobotPositionX").setDouble(ex); 
+            NetworkTableInstance.getDefault().getEntry("guiRobotPositionY").setDouble(ey); 
+            event.consume();
         });
         saveConfigurationButton.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -641,7 +650,7 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
             setPositionPane.setVisible(false);
             setPositionPane.setDisable(true);
         }
-        robotIcon.setRotate(180 + instance.getEntry("robotOrientationY").getDouble(0));
+        robotIcon.setRotate(instance.getEntry("robotOrientationY").getDouble(0));
     }
 
     private static double clamp(double val, double min, double max) {
@@ -651,7 +660,15 @@ public class GamePlanWidget extends SimpleAnnotatedWidget implements INetworkUpd
     @Override
     public void onNetworkUpdate() {
         if(NetworkTableInstance.getDefault().isConnected()) {
-            NetworkTableInstance.getDefault().getEntry("gamePlanStrategy").setString(getGamePlanStrategyOutput());
+            if(robotActions.isEmpty()) {
+                if(lastActor == this) {
+                    NetworkTableInstance.getDefault().getEntry("gamePlanStrategy").setString(getGamePlanStrategyOutput());
+                }
+            }
+            else {
+                NetworkTableInstance.getDefault().getEntry("gamePlanStrategy").setString(getGamePlanStrategyOutput());
+                lastActor = this;
+            }
         }
     }
 }
